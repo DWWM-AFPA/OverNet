@@ -1,0 +1,51 @@
+@startuml
+skinparam actorStyle awesome
+
+(effectuer une recherche sur le navigateur) as (Search)
+(Effectue une recherche sur les serveurs disponnible classique et perso) as (SearchDirection)
+(Recherche faite sur le  net classique) as (Classic)
+(Recherche faite sur notre net perso) as (Personnal)
+(Insere les resultats dans un tableau, en mettant un indice pour reconnaitre les differents serveurs de provenance des resultats) as (compilResult)
+(Filtre le resultat) as (Filter)
+(Retour resultat filtré et affiché avec liens opperationnel) as (filteredResult)
+
+(Adinistration du serveur) as (admin)
+(Serveur contenant nos sevices) as (serv)
+
+note "C.R.U.D." as N1
+note "HTTP request" as N2
+note "FAKE HTTP request" as N3
+note "HTTP response" as N4
+note "FAKE HTTP response" as N5
+note "Echange entre le serveur perso contenant les différents services" as N6
+
+Admin - (N1)
+(N1) -> (admin)
+(admin) --> (serv)
+
+User -> (Search)
+    Search --> (SearchDirection)
+        (SearchDirection) -- N2
+            N2 --> (Classic)
+
+        (SearchDirection) -- N3
+            N3 --> (Personnal)
+
+        (Classic) -- N4
+            N4 --> (compilResult)
+
+        (Personnal) -- N5
+            N5 --> (compilResult)
+
+    (compilResult) --> (Filter)
+    (Filter) --> (filteredResult)
+    (filteredResult) --> (User)
+
+(serv) <= N6
+ N6 => (Personnal)
+
+
+
+
+
+@enduml
