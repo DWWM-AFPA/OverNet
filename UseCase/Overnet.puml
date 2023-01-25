@@ -1,0 +1,50 @@
+@startuml
+skinparam actorStyle awesome
+
+Admin #0750EC
+User #0750EC
+(**Effectuer une recherche sur le navigateur**) as (Search) #LightBlue
+(**Effectue une recherche sur les serveurs disponnible classique et personnel**) as (SearchDirection) #LightBlue
+(**Recherche faite sur le  net classique**) as (Classic) #LightBlue
+(**Recherche faite sur notre net personnel**) as (Personnal) #LightBlue
+(**Insere les resultats dans un tableau, en mettant un indice pour reconnaitre**\n **les differents serveurs de provenance des resultats**) as (compilResult) #LightBlue
+
+(**Retour resultat filtré et affiché avec liens operationnels**) as (filteredResult) #LightBlue
+
+(**Administration du serveur**) as (admin) #LightBlue
+(**Serveur contenant nos services**) as (serv) #LightBlue
+
+note "C.R.U.D." as N1
+note "HTTP request" as N2
+note "FAKE HTTP request" as N3
+note "HTTP response" as N4
+note "FAKE HTTP response" as N5
+note "Echange entre le serveur personnel contenant les différents services" as N6
+
+Admin  - (N1)
+(N1) -> (admin)
+(admin) --> (serv)
+
+User -> (Search)
+    Search --> (SearchDirection)
+        (SearchDirection) -- N2
+            N2 --> (Classic)
+
+        (SearchDirection) -- N3
+            N3 --> (Personnal)
+
+        (Classic) -- N4
+            N4 --> (compilResult)
+
+        (Personnal) -- N5
+            N5 --> (compilResult)
+
+
+    (filteredResult) --> (User)
+
+(serv) <= N6
+ N6 => (Personnal)
+
+
+
+@enduml
