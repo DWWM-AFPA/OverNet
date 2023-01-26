@@ -24,26 +24,27 @@ note "Echange entre le serveur personnel contenant les différents services" as 
 Admin  - (N1)
 (N1) -> (admin)
 (admin) --> (serv)
+User --> (Search)
 
-User -> (Search)
-    Search --> (SearchDirection)
+    Search -> (SearchDirection)
         (SearchDirection) -- N2
-            N2 --> (Classic)
+            N2 -> (Classic)
 
         (SearchDirection) -- N3
-            N3 --> (Personnal)
+            N3 -> (Personnal)
 
         (Classic) -- N4
-            N4 --> (compilResult)
+            N4 -> (compilResult)
 
-        (Personnal) -- N5
-            N5 --> (compilResult)
+        (Personnal) --- N5
+            N5 -> (compilResult)
 
 
-    (filteredResult) --> (User)
+    (filteredResult) -> (User)
+    (compilResult) ---> (filteredResult)
 
-(serv) <= N6
- N6 => (Personnal)
+(serv) <== N6
+ N6 ==> (Personnal)
 
 
 
