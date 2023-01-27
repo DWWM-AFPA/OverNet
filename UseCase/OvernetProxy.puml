@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+abstract class Client
+interface ServiceInterface
+abstract DNSV
+class Proxy {
+config()
+HttpRequest()
+
+
+}
+class Service
+class HttpRequest
+class HttpResponse
+
+ServiceInterface <|- Client
+
+
+
+
+@enduml
