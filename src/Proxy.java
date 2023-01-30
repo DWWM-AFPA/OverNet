@@ -32,13 +32,13 @@ import java.util.Scanner;
  *
  */
 
-public class Proxy implements Runnable{
+public class Proxy implements Runnable {
 
 
     // Méthode principale du programme
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // Créer une instance du proxy et commence à écouter les connexions
-        Proxy myProxy = new Proxy(8080);  // spécifier le port
+        Proxy myProxy = new Proxy(8085);  // spécifier le port
         myProxy.listen();
     }
 
@@ -68,19 +68,16 @@ public class Proxy implements Runnable{
 
 
     /**
-     *
      * ArrayList des threads qui sont actuellement en cours d'exécution et qui traitent les demandes.
      * Cette liste est nécessaire pour joindre tous les threads à la fermeture du serveur
-     *
      */
 
     static ArrayList<Thread> servicingThreads;
 
     /**
-     *
      * Création du serveur Proxy
-     * @param port numéro de port de l'excécution du serveur Proxy.
      *
+     * @param port numéro de port de l'excécution du serveur Proxy.
      */
 
     public Proxy(int port) {
@@ -114,10 +111,10 @@ public class Proxy implements Runnable{
             }
             // charge les sites bloqués depuis le fichier "blockedSites.txt".
 
-            File blockedSitesFile = new File("blockedSites.txt");
-            if (!blockedSitesFile.exists()) {
+            File blockedSitesTxtFile = new File("blockedSites.txt");
+            if (!blockedSitesTxtFile.exists()) {
                 System.out.println("Le fichier 'blockedSites.txt' n'existe pas'");
-                blockedSitesFile.createNewFile();
+                blockedSitesTxtFile.createNewFile();
             } else {
                 FileInputStream fis = new FileInputStream(blockedSitesFile);
                 ObjectInputStream ois = new ObjectInputStream(fis);
@@ -125,13 +122,14 @@ public class Proxy implements Runnable{
                 ois.close();
                 fis.close();
             }
-        }   catch (IoException e) {
-                System.out.println("Erreur de chargement du fichier 'cachedSites.txt'");
-                e.printStackTrace();
-        }   catch (ClassNotFoundException e) {
+        } catch (IOException e) {
+            System.out.println("Erreur de chargement du fichier 'cachedSites.txt'");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             System.out.println("Classe non trouvée dans le fichier 'cachedSites.txt'");
             e.printStackTrace();
         }
+
 
         try {
             // Création du Server Socket pour le Proxy.
@@ -144,23 +142,18 @@ public class Proxy implements Runnable{
             running = true;
 
             // Catch exceptions associées à l'exécution du serveur Proxy.
-            catch (SocketException se){
-                System.out.println("Erreur de connexion au serveur Proxy");
-                se.printStackTrace();
-            }
-            catch(SocketTimeoutException ste){
-                System.out.println("Temps de connexion écoulé");
-                ste.printStackTrace();
-            }
-            catch (IOException ioe) {
-                System.out.println("io exception lors de la connexion du client");
-                ioe.printStackTrace();
-            }
-
+        } catch (SocketException se) {
+            System.out.println("Erreur de connexion au serveur Proxy");
+            se.printStackTrace();
+        } catch (SocketTimeoutException ste) {
+            System.out.println("Temps de connexion écoulé");
+            ste.printStackTrace();
+        } catch (IOException ioe) {
+            System.out.println("io exception lors de la connexion du client");
+            ioe.printStackTrace();
         }
-
-
     }
+
     /**
      *  Ecoute du port et accepte les nouvelles connexions de socket.
      *  Création d'un nouveau thread pour traiter la demande,lui transmet la connexion au socket et continue à écouter.
@@ -212,21 +205,41 @@ public class Proxy implements Runnable{
             fos2.close();
             System.out.println("Ecriture des sites bloqués dans le fichier 'blockedSites.'");
 
-            try{
+            try {
                 // Clotûre de tous les services Threads.
                 for (Thread thread : servicingThreads) {
-                    if(thread.isAlive()){
-                        System.out.print("En attente"+ thread.getId()+"pour fermeture");
+                    if (thread.isAlive()) {
+                        System.out.print("En attente" + thread.getId() + "pour fermeture");
                         thread.join();
                         System.out.println(" Fermer ");
                     }
                 }
-            }
-            catch(InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        } catch (IOException e) {
+                System.out.println("Erreur de chargement du fichier 'blockedSites.txt'");
+                e.printStackTrace();
+            }
+            // fermeture du Server Socket.
+            try {
+                System.out.println("Connexion terminé");
+                serverSocket.close();
+            } catch (Exception e) {
+                System.out.println("Exception lors de la fermeture du socket du serveur du proxy");
+                e.printStackTrace();
+            }
+
         }
-    }
+        /**
+         *  Consulte les fichiers en cache.
+         * @param url du fichier demandé (url request).
+         * @return un fichier si le fichier est mis en cache , sinon il renvoie null.
+         */
+        public static File getCachedPage(String url){
+            return cache.get(url);
+        }
+
     /**
      * Cherche le fichier dans le cache
      * @param url du fichier demandé
@@ -259,7 +272,7 @@ public class Proxy implements Runnable{
 
 @Override
 public void run(){
-    Scanner scanner = new Scanner(system.in);
+    Scanner scanner = new Scanner(System.in);
 
     String command;
     while (running) {
@@ -291,5 +304,6 @@ public void run(){
     scanner.close();
   }
 }
+
 
 
