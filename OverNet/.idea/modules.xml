@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OverNet.iml" filepath="$PROJECT_DIR$/OverNet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/clientProxy/clientProxy.iml" filepath="$PROJECT_DIR$/clientProxy/clientProxy.iml" />
     </modules>
   </component>
 </project>
