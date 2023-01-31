@@ -5,6 +5,9 @@ public class Main {
 
         __ProxyServer test2 = new __ProxyServer();
         test2.run("http://www.gobland.fr", "127.0.0.1", 5000);
+        //test2.run("http://www.gobland.fr");
 
     }
+
+
 }

@@ -92,15 +92,14 @@ public class __ProxyServer extends Thread {
         HttpRequest request = httpRequestFromString(myRequest);
         InetSocketAddress socket = new InetSocketAddress(addr, port);
         ProxySelector myProxyAdress = ProxySelector.of(socket);
-        System.out.println("socket : " + socket);
-        System.out.println("myproxyadress : " + myProxyAdress);
+
         try{
             HttpClient client = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(20))
                     .proxy(myProxyAdress)
                     .build();
             //runProxy(port);
-            return client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
         }
             catch (IOException e){
                 System.err.println("IOException :" + e);
@@ -132,9 +131,8 @@ public class __ProxyServer extends Thread {
                     .connectTimeout(Duration.ofSeconds(20))
                     //.authenticator(Authenticator.getDefault())
                     .build();
-            //System.out.println(Authenticator.getDefault());
-            //System.out.println("ligne 125 " + HttpResponse.BodyHandlers.ofString());
-            return client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
         }
             catch (IOException e){
             System.err.println("IOException :" + e);
@@ -159,10 +157,9 @@ public class __ProxyServer extends Thread {
 
     }
 
-    public void run(String myRequest){
-
-            System.out.println(monProxy(myRequest)
-                    //.body()
+    public static void run(String myRequest){
+        System.out.println(monProxy(myRequest)
+                    .body()
             );
     }
 
@@ -175,11 +172,12 @@ public class __ProxyServer extends Thread {
     }
 
     public void run(String myRequest, String addr, int port){
+        __ProxyServer test1 = new __ProxyServer();
+
         //runProxy(port);
-        System.out.println(monProxy(myRequest, addr, port)
+        System.out.println(test1.monProxy(myRequest, addr, port)
                 //.body()
         );
-
     }
 
     public static void runProxy(int localPort) {
@@ -199,29 +197,54 @@ public class __ProxyServer extends Thread {
                 System.out.println("Socket Créé");
 
                 entreServer = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
-
                 sortieServer = new BufferedWriter(new OutputStreamWriter(mySocket.getOutputStream()));
 
-                
+                String request = "";
 
-                System.out.println(entreServer);
+                try {
+                    String[] buffer = entreServer.readLine().split(" ");
+                    request = buffer[1];
+                }catch(IOException e) {
+                    System.err.println("Impossible de creer la requete depuis l'inputStream : "+e);
+                }
+
+
+                HttpResponse response = monProxy(request);
+
+                //sortieServer.write(response.toString());
+                //sortieServer.flush();
+
+                //run(request);
+
+                /*   TODO !!
+
+                utiliser la methode monProxy pour transformer l'httpresponse qu'il retourne en outputstream !
+                monProxy(request);
+                */
+
+
+                //System.out.println(response.body());
                 System.out.println(sortieServer);
+                //System.out.println(sortieServer);
 
             }
 
 
         } catch (IOException e) {
-            System.err.println("211 " + e);
+            System.err.println("213 " + e);
             e.printStackTrace();
 
-            //System.exit(1);
         } catch (Exception e) {
-            System.err.println("216 " + e);
+            System.err.println("218 " + e);
             e.printStackTrace();
 
         } finally {
             if(mySocket !=null)
-            mySocket = null;
+                try {
+                    mySocket.close();
+                }catch(Exception e){
+                    System.err.println(e);
+                }
 
             System.out.println("Mon socket est fermé.");
         }
@@ -241,4 +264,8 @@ public class __ProxyServer extends Thread {
         }
 
     }
+
+
+
+
 }
