@@ -8,9 +8,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.ThreadFactory;
 
 
 /**
@@ -38,9 +40,16 @@ public class Proxy implements Runnable {
     // Méthode principale du programme
     public static void main(String[] args) {
         // Créer une instance du proxy et commence à écouter les connexions
-        Proxy myProxy = new Proxy(8085);  // spécifier le port
-        myProxy.listen();
+        Proxy myProxy = new Proxy(8080);  // spécifier le port
+
+        //Proxy myProxy
+        //myProxy.listen();
+        System.out.println();
+
     }
+
+
+
 
     private ServerSocket serverSocket;
 
@@ -116,7 +125,7 @@ public class Proxy implements Runnable {
                 System.out.println("Le fichier 'blockedSites.txt' n'existe pas'");
                 blockedSitesTxtFile.createNewFile();
             } else {
-                FileInputStream fis = new FileInputStream(blockedSitesFile);
+                FileInputStream fis = new FileInputStream(blockedSitesTxtFile);
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 blockedSites = (HashMap<String, String>) ois.readObject();
                 ois.close();
