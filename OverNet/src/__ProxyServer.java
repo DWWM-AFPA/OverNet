@@ -1,10 +1,12 @@
 import java.io.*;
 import java.net.*;
 import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Date;
+import java.util.List;
 
 public class __ProxyServer extends Thread {
 
@@ -39,6 +41,9 @@ public class __ProxyServer extends Thread {
 
     public static HttpRequest httpRequestFromString(String monUrl){
         HttpRequest retour = null;
+        if(!monUrl.startsWith("htt"))
+            monUrl = "http://"+monUrl;
+
         try {
             retour =  HttpRequest.newBuilder()
                     .uri(URI.create(monUrl))
@@ -52,7 +57,7 @@ public class __ProxyServer extends Thread {
             e.printStackTrace();
 
         }
-        System.out.println(retour);
+        //System.out.println(retour);
         return retour;
     }
 
@@ -104,7 +109,6 @@ public class __ProxyServer extends Thread {
             catch (IOException e){
                 System.err.println("IOException :" + e);
                 e.printStackTrace();
-
                 return null;
             }
             catch (InterruptedException e){
@@ -118,25 +122,25 @@ public class __ProxyServer extends Thread {
             catch (Exception e){
                 System.err.println("CA MARCHE PAS : " + e);
                 e.printStackTrace();
-
                 return null;
             }
     }
 
     public static HttpResponse monProxy(String myRequest){
-
+        //System.out.println("toto : " +myRequest);
         HttpRequest request = httpRequestFromString(myRequest);
         try {
             HttpClient client = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(20))
-                    //.authenticator(Authenticator.getDefault())
                     .build();
 
             return client.send(request, HttpResponse.BodyHandlers.ofString());
         }
             catch (IOException e){
-            System.err.println("IOException :" + e);
-            return null;
+            System.err.println("IOException 139 :" + e);
+                e.printStackTrace();
+
+                return null;
         }
             catch (InterruptedException e){
             System.err.println("InterruptedException :" + e);
@@ -172,11 +176,10 @@ public class __ProxyServer extends Thread {
     }
 
     public void run(String myRequest, String addr, int port){
-        __ProxyServer test1 = new __ProxyServer();
 
         //runProxy(port);
-        System.out.println(test1.monProxy(myRequest, addr, port)
-                //.body()
+        System.out.println(monProxy(myRequest, addr, port)
+                .body()
         );
     }
 
@@ -200,7 +203,6 @@ public class __ProxyServer extends Thread {
                 sortieServer = new BufferedWriter(new OutputStreamWriter(mySocket.getOutputStream()));
 
                 String request = "";
-
                 try {
                     String[] buffer = entreServer.readLine().split(" ");
                     request = buffer[1];
@@ -208,25 +210,33 @@ public class __ProxyServer extends Thread {
                     System.err.println("Impossible de creer la requete depuis l'inputStream : "+e);
                 }
 
+                if(monProxy(request) != null) {
+                    HttpResponse<String> response = monProxy(request);
+                    HttpHeaders responseHeader = response.headers();
 
-                HttpResponse response = monProxy(request);
+                    String version = response.version().toString().replaceFirst("_", "/").replaceFirst("_", ".");
+                    int etat = response.statusCode();
+                    String responseBody = response.body();
 
-                //sortieServer.write(response.toString());
-                //sortieServer.flush();
+                    //System.out.println("avant : " + request);
+                    //System.out.println("pouet : " + version + " " + etat +" OK ");
 
-                //run(request);
+                    sortieServer.write(version + " " + etat +" OK ");
+                    sortieServer.newLine();
+                    //sortieServer.write(responseHeader.toString());
+                    sortieServer.newLine();
+                    sortieServer.write(responseBody);
+                    sortieServer.close();
+                    //System.out.println("apres : " +sortieServer);
+                    if(mySocket !=null)
+                        try {
+                            mySocket.close();
+                        }catch(Exception e){
+                            System.err.println(e);
+                        }
 
-                /*   TODO !!
-
-                utiliser la methode monProxy pour transformer l'httpresponse qu'il retourne en outputstream !
-                monProxy(request);
-                */
-
-
-                //System.out.println(response.body());
-                System.out.println(sortieServer);
-                //System.out.println(sortieServer);
-
+                    System.out.println("Mon socket est fermé.");
+                }
             }
 
 
