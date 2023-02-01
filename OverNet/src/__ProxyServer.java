@@ -179,6 +179,13 @@ public class __ProxyServer extends Thread {
 
         //runProxy(port);
         System.out.println(monProxy(myRequest, addr, port)
+        );
+    }
+
+    public void runHtml(String myRequest, String addr, int port){
+
+        //runProxy(port);
+        System.out.println(monProxy(myRequest, addr, port)
                 .body()
         );
     }
