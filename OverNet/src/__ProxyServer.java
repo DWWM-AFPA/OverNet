@@ -1,3 +1,4 @@
+import javax.net.ssl.SSLSession;
 import java.io.*;
 import java.net.*;
 import java.net.http.HttpClient;
@@ -5,62 +6,83 @@ import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.Date;
-import java.util.List;
+import java.util.Optional;
+
+/**
+ * Classe __ProxyServer permetant l'ecoute d'un port afin de creer un proxy
+ * @extend Thread
+ * @author Florian
+ * @version 1.0
+ */
 
 public class __ProxyServer extends Thread {
 
-    private static HttpRequest request;
-    private static HttpResponse response;
-    private static InetSocketAddress socket;
 
+    /**
+     * Un HttpRequest à visibilité privée
+     */
+    private HttpRequest request;
+
+    /**
+     * Un HttpResponse à visibilité privée
+     */
+    private HttpResponse response;
+
+    /**
+     * Un InetSocketAddress à visibilité privée
+     */
+    private InetSocketAddress socket;
+
+    /**
+     * Seteur de l'attribut request
+     */
     public void setRequest(HttpRequest request) {
         this.request = request;
     }
 
+    /**
+     * Geteur de l'attribut request
+     */
     public HttpRequest getRequest() {
         return request;
     }
 
+    /**
+     * Seteur de l'attribut response
+     */
     public void setResponse(HttpResponse response) {
         this.response = response;
     }
 
+    /**
+     * Geteur de l'attribut response
+     */
     public HttpResponse getResponse() {
         return response;
     }
 
+    /**
+     * Seteur de l'attribut socket
+     */
     public void setSocket(InetSocketAddress socket) {
         this.socket = socket;
     }
 
-    public static InetSocketAddress getSocket() {
+    /**
+     * Geteur de l'attribut socket
+     */
+    public InetSocketAddress getSocket() {
         return socket;
     }
 
-
-    public static HttpRequest httpRequestFromString(String monUrl){
-        HttpRequest retour = null;
-        if(!monUrl.startsWith("htt"))
-            monUrl = "http://"+monUrl;
-
-        try {
-            retour =  HttpRequest.newBuilder()
-                    .uri(URI.create(monUrl))
-                    .build();
-        }
-        catch (IllegalStateException e){
-            System.err.println("httpRequestFromString ne fonctionne pas :" + e);
-        }
-        catch (Exception e){
-            System.err.println("CA MARCHE PAS : " + e);
-            e.printStackTrace();
-
-        }
-        //System.out.println(retour);
-        return retour;
-    }
-
+    /**
+     * Un constructeur avec un string, une InetAdress, et un entier
+     * en paramètre.
+     * @param myRequest un string
+     * @param addr une InetAddress
+     * @param port un entier
+     * @return HttpResponse
+     */
     public static HttpResponse monProxy(String myRequest, InetAddress addr, int port){
 
         HttpRequest request = httpRequestFromString(myRequest);
@@ -70,7 +92,7 @@ public class __ProxyServer extends Thread {
             return HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(20))
                     .proxy(myProxyAdress)
-                    .build().send(request, HttpResponse.BodyHandlers.ofInputStream());
+                    .build().send(request, HttpResponse.BodyHandlers.ofString());
         }
         catch (IOException e){
             System.err.println("IOException :" + e);
@@ -87,11 +109,18 @@ public class __ProxyServer extends Thread {
         catch (Exception e){
             System.err.println("CA MARCHE PAS : " + e);
             e.printStackTrace();
-
             return null;
         }
     }
 
+    /**
+     * Un constructeur avec un string, un string, et un entier
+     * en paramètre.
+     * @param myRequest un string
+     * @param addr une string
+     * @param port un entier
+     * @return HttpResponse
+     */
     public static HttpResponse monProxy(String myRequest, String addr, int port){
 
         HttpRequest request = httpRequestFromString(myRequest);
@@ -103,31 +132,36 @@ public class __ProxyServer extends Thread {
                     .connectTimeout(Duration.ofSeconds(20))
                     .proxy(myProxyAdress)
                     .build();
-            //runProxy(port);
             return client.send(request, HttpResponse.BodyHandlers.ofString());
         }
-            catch (IOException e){
-                System.err.println("IOException :" + e);
-                e.printStackTrace();
-                return null;
-            }
-            catch (InterruptedException e){
-                System.err.println("InterruptedException :" + e);
-                return null;
-            }
-            catch (IllegalArgumentException e){
-                System.err.println("L'argument de mon socket est pas bon :" + e);
-                return null;
-            }
-            catch (Exception e){
-                System.err.println("CA MARCHE PAS : " + e);
-                e.printStackTrace();
-                return null;
-            }
+        catch (IOException e){
+            System.err.println("IOException :" + e);
+            e.printStackTrace();
+            return null;
+        }
+        catch (InterruptedException e){
+            System.err.println("InterruptedException :" + e);
+            return null;
+        }
+        catch (IllegalArgumentException e){
+            System.err.println("L'argument de mon socket est pas bon :" + e);
+            return null;
+        }
+        catch (Exception e){
+            System.err.println("CA MARCHE PAS : " + e);
+            e.printStackTrace();
+            return null;
+        }
     }
 
+    /**
+     * Un constructeur avec un string
+     * en paramètre.
+     * @param myRequest un string
+     * @return HttpResponse
+     */
     public static HttpResponse monProxy(String myRequest){
-        //System.out.println("toto : " +myRequest);
+
         HttpRequest request = httpRequestFromString(myRequest);
         try {
             HttpClient client = HttpClient.newBuilder()
@@ -136,66 +170,127 @@ public class __ProxyServer extends Thread {
 
             return client.send(request, HttpResponse.BodyHandlers.ofString());
         }
-            catch (IOException e){
+        catch (IOException e){
             System.err.println("IOException 139 :" + e);
-                e.printStackTrace();
+            e.printStackTrace();
 
-                return null;
+            return null;
         }
-            catch (InterruptedException e){
+        catch (InterruptedException e){
             System.err.println("InterruptedException :" + e);
             return null;
         }
-            catch (IllegalArgumentException e){
+        catch (IllegalArgumentException e){
             System.err.println("L'argument de mon socket est pas bon :" + e);
             return null;
         }
-            catch (Exception e){
+        catch (Exception e){
             System.err.println("CA MARCHE PAS : " + e);
             e.printStackTrace();
             System.err.flush();
-            System.out.println("request " + request);
-            System.out.println("pasrequest " + HttpResponse.BodyHandlers.ofString());
+            //System.out.println("request " + request);
+            //System.out.println("pasrequest " + HttpResponse.BodyHandlers.ofString());
             return null;
         }
 
+
     }
 
-    public static void run(String myRequest){
+    /**
+     * Une methode run avec en paramètre un string
+     * et permet l'affichage de l'objet HttpResponse
+     * de la requête HttpRequest
+     * @param myRequest un string
+     * @return void
+     */
+    public void run(String myRequest){
         System.out.println(monProxy(myRequest)
-                    .body()
-            );
+        );
     }
 
+    /**
+     * Une methode runHtml avec en paramètre un string
+     * et permet l'affichage du body en html
+     * de la requête HttpRequest
+     * @param myRequest un string
+     * @return void
+     */
+    public void runHtml(String myRequest){
+        System.out.println(monProxy(myRequest)
+                .body()
+        );
+    }
+
+    /**
+     * Une methode run avec en paramètre un string, une InetAddress, un entier
+     * et permet l'affichage de l'objet HttpResponse
+     * de la requête HttpRequest
+     * @param myRequest un string
+     * @param addr un InetAddress
+     * @param port un entier
+     * @return void
+     */
     public void run(String myRequest, InetAddress addr, int port){
-        __ProxyServer test1 = new __ProxyServer();
-        __ProxyServer test2 = new __ProxyServer();
-
-        //System.out.println(test1.monProxy(myRequest).body());
-
-    }
-
-    public void run(String myRequest, String addr, int port){
-
-        //runProxy(port);
         System.out.println(monProxy(myRequest, addr, port)
         );
     }
 
-    public void runHtml(String myRequest, String addr, int port){
-
-        //runProxy(port);
+    /**
+     * Une methode runHtml avec en paramètre un string, une InetAddress, un entier
+     * et permet l'affichage du body en html
+     * de la requête HttpRequest
+     * @param myRequest un string
+     * @param addr un InetAddress
+     * @param port un entier
+     * @return void
+     */
+    public void runHtml(String myRequest, InetAddress addr, int port){
         System.out.println(monProxy(myRequest, addr, port)
                 .body()
         );
     }
 
+    /**
+     * Une methode run avec en paramètre un string, un string, un entier
+     * et permet l'affichage de l'objet HttpResponse
+     * de la requête HttpRequest
+     * @param myRequest un string
+     * @param addr un string
+     * @param port un entier
+     * @return void
+     */
+    public void run(String myRequest, String addr, int port){
+        System.out.println(monProxy(myRequest, addr, port)
+        );
+    }
+
+    /**
+     * Une methode runHtml avec en paramètre un string, un string, un entier
+     * et permet l'affichage du body en html
+     * de la requête HttpRequest
+     * @param myRequest un string
+     * @param addr un string
+     * @param port un entier
+     * @return void
+     */
+    public void runHtml(String myRequest, String addr, int port){
+        System.out.println(monProxy(myRequest, addr, port)
+                .body()
+        );
+    }
+
+    /**
+     * Une methode runProxy avec en paramètre un entier
+     * et permet l'activation de l'ecoute d'un port et
+     * l'ouverture d'un socket puis d'un thread provisoire pour le traiter.
+     * @param localPort un entier
+     * @return void
+     */
     public static void runProxy(int localPort) {
 
         ServerSocket myServerSocket = null;
         Socket mySocket = null;
-        BufferedReader entreServer;
-        BufferedWriter sortieServer;
+
 
         System.out.println("ON start proxy");
         try {
@@ -205,48 +300,8 @@ public class __ProxyServer extends Thread {
             while (true) {
                 mySocket = myServerSocket.accept();
                 System.out.println("Socket Créé");
-
-                entreServer = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
-                sortieServer = new BufferedWriter(new OutputStreamWriter(mySocket.getOutputStream()));
-
-                String request = "";
-                try {
-                    String[] buffer = entreServer.readLine().split(" ");
-                    request = buffer[1];
-                }catch(IOException e) {
-                    System.err.println("Impossible de creer la requete depuis l'inputStream : "+e);
-                }
-
-                if(monProxy(request) != null) {
-                    HttpResponse<String> response = monProxy(request);
-                    HttpHeaders responseHeader = response.headers();
-
-                    String version = response.version().toString().replaceFirst("_", "/").replaceFirst("_", ".");
-                    int etat = response.statusCode();
-                    String responseBody = response.body();
-
-                    //System.out.println("avant : " + request);
-                    //System.out.println("pouet : " + version + " " + etat +" OK ");
-
-                    sortieServer.write(version + " " + etat +" OK ");
-                    sortieServer.newLine();
-                    //sortieServer.write(responseHeader.toString());
-                    sortieServer.newLine();
-                    sortieServer.write(responseBody);
-                    sortieServer.close();
-                    //System.out.println("apres : " +sortieServer);
-                    if(mySocket !=null)
-                        try {
-                            mySocket.close();
-                        }catch(Exception e){
-                            System.err.println(e);
-                        }
-
-                    System.out.println("Mon socket est fermé.");
-                }
+                maCreationDeThread(mySocket);
             }
-
-
         } catch (IOException e) {
             System.err.println("213 " + e);
             e.printStackTrace();
@@ -262,27 +317,84 @@ public class __ProxyServer extends Thread {
                 }catch(Exception e){
                     System.err.println(e);
                 }
-
-            System.out.println("Mon socket est fermé.");
+            System.out.println("Mon proxy c'est arrêté.");
         }
-
     }
 
-    private static void getRequestFromSocket(int port) {
-        try {
-            ServerSocket myServerSocket = new ServerSocket(port);
-            Socket mySocket = myServerSocket.accept();
-            InputStream input = mySocket.getInputStream();
+    /**
+     * Une methode maCreationDeThread avec en paramètre un socket
+     * et permet l'utilisation des données input en provenance du
+     * socket et de renvoyer un resultat par ce meme socket.
+     * @param mySocket un socket
+     * @return void
+     */
+    public static void maCreationDeThread(Socket mySocket){
+        BufferedReader entreServer;
+        BufferedWriter sortieServer;
+        String request = "";
 
-            System.out.println("mySocket : " + mySocket);
-            System.out.println("myInput : " + input);
+        try{
+            entreServer = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
+            sortieServer = new BufferedWriter(new OutputStreamWriter(mySocket.getOutputStream()));
+            String[] buffer = entreServer.readLine().split(" ");
+            request = buffer[1];
+
+            if(monProxy(request) != null) {
+                HttpResponse<String> response = monProxy(request);
+                HttpHeaders responseHeader = response.headers();
+
+                String version = response.version().toString().replaceFirst("_", "/").replaceFirst("_", ".");
+                int etat = response.statusCode();
+                Optional<SSLSession> sslSession = response.sslSession();
+                String responseBody = response.body();
+
+                sortieServer.write(version + " " + etat + " OK ");
+                sortieServer.newLine();
+                sortieServer.newLine();
+                sortieServer.write(responseBody);
+                sortieServer.close();
+                if (mySocket != null)
+                    try {
+                        mySocket.close();
+                    } catch (Exception e) {
+                        System.err.println(e);
+                    }
+
+                System.out.println("Mon socket est fermé.");
+            }
+
         }catch (IOException e){
-            System.err.println("IOException socket : " + e);
+            System.err.println("Impossible de se connecter (IOException) : "+e);
+        }catch (Exception e){
+            System.err.println("Impossible de se connecter : "+e);
         }
-
     }
 
+    /**
+     * Une methode httpRequestFromString avec en paramètre un string
+     * et permet la création d'une HttpRequest à partir d'une adresse url.
+     * Elle ajoute aussi le protocole utilisé au debut de la requête si il n'est pas présent.
+     * @param monUrl un string
+     * @return HttpRequest
+     */
+    public static HttpRequest httpRequestFromString(String monUrl){
+        HttpRequest retour = null;
+        if(!monUrl.startsWith("htt"))
+            monUrl = "http://"+monUrl;
 
-
-
+        try {
+            retour =  HttpRequest.newBuilder()
+                    .uri(URI.create(monUrl))
+                    .build();
+        }
+        catch (IllegalStateException e){
+            System.err.println("httpRequestFromString ne fonctionne pas :" + e);
+        }
+        catch (Exception e){
+            System.err.println("CA MARCHE PAS : " + e);
+            e.printStackTrace();
+        }
+        //System.out.println(retour);
+        return retour;
+    }
 }
