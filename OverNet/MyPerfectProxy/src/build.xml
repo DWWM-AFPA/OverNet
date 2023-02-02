@@ -1,0 +1,18 @@
+<project basedir="." default="build" name="Mon Proxy Maison">
+    <target name="build">
+        <!-- Création du dossier classes -->
+        <mkdir dir="classes"/>
+
+        <!-- Compilation des classes du programme -->
+        <javac srcdir="src" destdir="classes" />
+
+        <!-- Création du dossier install -->
+        <mkdir dir="install/lib"/>
+
+        <!-- Création du fichier Bienvenue.jar -->
+        <jar destfile="install/lib/MyPerfectProxy.jar" basedir="classes"/>
+
+        <!-- Suppression du dossier classes -->
+        <delete dir="classes"/>
+    </target>
+</project>
