@@ -10,7 +10,7 @@ import java.util.Optional;
 
 /**
  * Classe __ProxyServer permetant l'ecoute d'un port afin de creer un proxy
- * @author Florian
+ * @author Florian, Chacha, Julien, Thomas
  * @version 1.0
  */
 
@@ -31,6 +31,11 @@ public class __ProxyServer extends Thread {
      * Un InetSocketAddress à visibilité privée
      */
     private InetSocketAddress socket;
+
+    /**
+     * Un Socket à visibilité privée
+     */
+    private Socket mySocket;
 
     /**
      * Seteur de l'attribut request avec en paramètre HttpRequest
@@ -78,6 +83,22 @@ public class __ProxyServer extends Thread {
      */
     public InetSocketAddress getSocket() {
         return socket;
+    }
+
+    /**
+     * Seteur de l'attribut mySocket avec en paramètre Socket
+     * @param mySocket une Socket
+     */
+    public void setMySocket(Socket mySocket) {
+        this.mySocket = mySocket;
+    }
+
+    /**
+     * Geteur de l'attribut mySocket
+     * @return Socket
+     */
+    public Socket getMySocket() {
+        return mySocket;
     }
 
     /**
@@ -207,7 +228,7 @@ public class __ProxyServer extends Thread {
      * de la requête HttpRequest
      * @param myRequest un string
      */
-    public void run(String myRequest){
+    public void test(String myRequest){
         System.out.println(monProxy(myRequest)
         );
     }
@@ -218,7 +239,7 @@ public class __ProxyServer extends Thread {
      * de la requête HttpRequest
      * @param myRequest un string
      */
-    public void runHtml(String myRequest){
+    public void testhtml(String myRequest){
         System.out.println(monProxy(myRequest)
                 .body()
         );
@@ -232,7 +253,7 @@ public class __ProxyServer extends Thread {
      * @param addr un InetAddress
      * @param port un entier
      */
-    public void run(String myRequest, InetAddress addr, int port){
+    public void test(String myRequest, InetAddress addr, int port){
         System.out.println(monProxy(myRequest, addr, port)
         );
     }
@@ -245,7 +266,7 @@ public class __ProxyServer extends Thread {
      * @param addr un InetAddress
      * @param port un entier
      */
-    public void runHtml(String myRequest, InetAddress addr, int port){
+    public void testhtml(String myRequest, InetAddress addr, int port){
         System.out.println(monProxy(myRequest, addr, port)
                 .body()
         );
@@ -259,7 +280,7 @@ public class __ProxyServer extends Thread {
      * @param addr un string
      * @param port un entier
      */
-    public void run(String myRequest, String addr, int port){
+    public void test(String myRequest, String addr, int port){
         System.out.println(monProxy(myRequest, addr, port)
         );
     }
@@ -272,7 +293,7 @@ public class __ProxyServer extends Thread {
      * @param addr un string
      * @param port un entier
      */
-    public void runHtml(String myRequest, String addr, int port){
+    public void testhtml(String myRequest, String addr, int port){
         System.out.println(monProxy(myRequest, addr, port)
                 .body()
         );
@@ -298,7 +319,9 @@ public class __ProxyServer extends Thread {
             while (true) {
                 mySocket = myServerSocket.accept();
                 System.out.println("Socket Créé");
-                maCreationDeThread(mySocket);
+                __ProxyServer monThread = new __ProxyServer();
+                monThread.setMySocket(mySocket);
+                new Thread(monThread).start();
             }
         } catch (IOException e) {
             System.err.println("213 " + e);
@@ -325,7 +348,7 @@ public class __ProxyServer extends Thread {
      * l'ouverture d'un socket puis d'un thread provisoire pour le traiter.
      * @param localPort un entier
      * @param backlog un entier
-     * @param bindAddr une InetAddress
+     * @param host une InetAddress
      */
     public void runProxy(int localPort, int backlog, String host) {
 
@@ -342,9 +365,10 @@ public class __ProxyServer extends Thread {
 
             while (true) {
                 mySocket = myServerSocket.accept();
-                System.out.println("Socket Créé");
-                maCreationDeThread(mySocket);
-            }
+                System.out.println("Socket Créé" );
+                __ProxyServer monThread = new __ProxyServer();
+                monThread.setMySocket(mySocket);
+                new Thread(monThread).start();            }
         } catch (IOException e) {
             System.err.println("213 " + e);
             e.printStackTrace();
@@ -365,12 +389,11 @@ public class __ProxyServer extends Thread {
     }
 
     /**
-     * Une methode maCreationDeThread avec en paramètre un socket
-     * et permet l'utilisation des données input en provenance du
+     * Une methode run qui
+     * permet l'utilisation des données input en provenance du
      * socket et de renvoyer un resultat par ce meme socket.
-     * @param mySocket un socket
      */
-    public void maCreationDeThread(Socket mySocket){
+    public void run(){
         BufferedReader entreServer;
         BufferedWriter sortieServer;
         String request = "";
@@ -379,10 +402,10 @@ public class __ProxyServer extends Thread {
             entreServer = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
             sortieServer = new BufferedWriter(new OutputStreamWriter(mySocket.getOutputStream()));
             String[] buffer = entreServer.readLine().split(" ");
-            request = buffer[1];
-
-            if(monProxy(request) != null) {
-                HttpResponse<String> response = monProxy(request);
+            //request = buffer[1];
+            System.out.println("destination : " + buffer[1]);
+            HttpResponse<String> response = monProxy(buffer[1]);
+            if(response != null) {
                 HttpHeaders responseHeader = response.headers();
 
                 String version = response.version().toString().replaceFirst("_", "/").replaceFirst("_", ".");
@@ -395,20 +418,21 @@ public class __ProxyServer extends Thread {
                 sortieServer.newLine();
                 sortieServer.write(responseBody);
                 sortieServer.close();
-                if (mySocket != null)
-                    try {
-                        mySocket.close();
-                    } catch (Exception e) {
-                        System.err.println(e);
-                    }
 
-                System.out.println("Mon socket est fermé.");
             }
 
         }catch (IOException e){
             System.err.println("Impossible de se connecter (IOException) : "+e);
         }catch (Exception e){
             System.err.println("Impossible de se connecter : "+e);
+        }finally {
+            if (mySocket != null)
+                try {
+                    mySocket.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            System.out.println("Mon socket est fermé.");
         }
     }
 
@@ -419,7 +443,7 @@ public class __ProxyServer extends Thread {
      * @param monUrl un string
      * @return HttpRequest
      */
-    public HttpRequest httpRequestFromString(String monUrl){
+    private HttpRequest httpRequestFromString(String monUrl){
         HttpRequest retour = null;
         if(!monUrl.startsWith("htt"))
             monUrl = "http://"+monUrl;
