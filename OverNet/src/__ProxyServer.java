@@ -396,16 +396,15 @@ public class __ProxyServer extends Thread {
     public void run(){
         BufferedReader entreServer;
         BufferedWriter sortieServer;
-        String request = "";
 
         try{
             entreServer = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
             sortieServer = new BufferedWriter(new OutputStreamWriter(mySocket.getOutputStream()));
             String[] buffer = entreServer.readLine().split(" ");
-            //request = buffer[1];
             System.out.println("destination : " + buffer[1]);
             HttpResponse<String> response = monProxy(buffer[1]);
             if(response != null) {
+
                 HttpHeaders responseHeader = response.headers();
 
                 String version = response.version().toString().replaceFirst("_", "/").replaceFirst("_", ".");
@@ -418,7 +417,6 @@ public class __ProxyServer extends Thread {
                 sortieServer.newLine();
                 sortieServer.write(responseBody);
                 sortieServer.close();
-
             }
 
         }catch (IOException e){
