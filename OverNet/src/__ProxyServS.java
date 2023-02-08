@@ -1,3 +1,4 @@
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 import java.io.*;
 import java.net.*;
@@ -7,6 +8,11 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Optional;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.cert.Certificate;
+
+import javax.net.ssl.SSLPeerUnverifiedException;
 
 /**
  * Classe __ProxyServer permetant l'ecoute d'un port afin de creer un proxy
@@ -14,7 +20,7 @@ import java.util.Optional;
  * @version 1.0
  */
 
-public class __ProxyServer extends Thread {
+public class __ProxyServS extends Thread {
 
 
     /**
@@ -190,25 +196,21 @@ public class __ProxyServer extends Thread {
 
         HttpRequest request = httpRequestFromString(myRequest);
         try {
-            HttpClient client = HttpClient.newBuilder()
-                    .connectTimeout(Duration.ofSeconds(20))
-                    .build();
 
-            return client.send(request, HttpResponse.BodyHandlers.ofString());
-        }
-        catch (IOException e){
-            System.err.println("IOException 139 :" + e);
-            //e.printStackTrace();
+            URL url = new URL(myRequest);
+            HttpsURLConnection client = (HttpsURLConnection)url.openConnection();
 
-            return null;
-        }
-        catch (InterruptedException e){
-            System.err.println("InterruptedException :" + e);
-            return null;
-        }
-        catch (IllegalArgumentException e){
-            System.err.println("L'argument de mon socket est pas bon :" + e);
-            return null;
+            //dumpl all cert info
+            //print_https_cert(client);
+
+            //dump all the content
+            //print_content(client);
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         catch (Exception e){
             System.err.println("CA MARCHE PAS : " + e);
@@ -219,7 +221,7 @@ public class __ProxyServer extends Thread {
             return null;
         }
 
-
+        return null;
     }
 
     /**
