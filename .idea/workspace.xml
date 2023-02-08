@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1cb1b4e3-5125-473e-9076-17b5f41dc4fa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OverNet/src/__ProxyServS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OverNet/out/production/Overnet2/__ProxyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/out/production/Overnet2/__ProxyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OverNet/src/__ProxyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/src/__ProxyServer.java" afterDir="false" />
-    </list>
+    <list default="true" id="1cb1b4e3-5125-473e-9076-17b5f41dc4fa" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,13 +32,28 @@
     "DefaultPlantUmlFileTemplate": "UML Use Case",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/CDA-08/IdeaProjects/Overnet2",
+    "last_opened_file_path": "C:/Users/CDA-08/IdeaProjects/Overnet",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="OverNet" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="OverNet" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
