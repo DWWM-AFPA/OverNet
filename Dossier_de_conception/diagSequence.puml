@@ -1,0 +1,26 @@
+@startuml
+
+autonumber
+
+Admin -> VDNS: Demande d'afficher la liste des valeurs
+
+VDNS -> Server: Recupere toutes les valeurs presentes dans la table
+VDNS <-- Server: Retourne le contenu de la table
+
+VDNS --> Admin: Affiche le tablau des valeurs
+group Creation
+    Admin -> VDNS: Création d'une ligne
+    VDNS -> Server: INSERT une ligne
+    Server -> VDNS: Création reussi
+    VDNS -> Admin: Création effectué
+end
+group Edition ou suppression
+    Admin -> VDNS: Selection d'une ligne
+    VDNS -> Admin: Valeurs de la ligne récupéré
+    Admin -> VDNS: Selection d'une ligne
+    VDNS -> Server: UPDATE, DELETE de la ligne
+    Server -> VDNS: Edition ou suppression reussi
+    VDNS -> Admin: Edition ou suppression effectué
+end
+
+@enduml

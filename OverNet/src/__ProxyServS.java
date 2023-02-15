@@ -192,21 +192,12 @@ public class __ProxyServS extends Thread {
      * @param myRequest un string
      * @return HttpResponse
      */
-    public HttpResponse monProxy(String myRequest){
-
-        HttpRequest request = httpRequestFromString(myRequest);
+    public HttpsURLConnection monProxy(String myRequest){
+        HttpsURLConnection retour = null;
         try {
-
             URL url = new URL(myRequest);
             HttpsURLConnection client = (HttpsURLConnection)url.openConnection();
-
-            //dumpl all cert info
-            //print_https_cert(client);
-
-            //dump all the content
-            //print_content(client);
-
-
+            retour = client;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -218,10 +209,8 @@ public class __ProxyServS extends Thread {
             System.err.flush();
             //System.out.println("request " + request);
             //System.out.println("pasrequest " + HttpResponse.BodyHandlers.ofString());
-            return null;
         }
-
-        return null;
+        return retour;
     }
 
     /**
@@ -241,10 +230,12 @@ public class __ProxyServS extends Thread {
      * de la requête HttpRequest
      * @param myRequest un string
      */
-    public void testhtml(String myRequest){
-        System.out.println(monProxy(myRequest)
-                .body()
-        );
+    public void testhtml (String myRequest){
+            System.out.println(monProxy(myRequest)
+                    //.getURL()
+                    //.get
+                    //.body()
+            );
     }
 
     /**
@@ -403,8 +394,10 @@ public class __ProxyServS extends Thread {
             entreServer = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
             sortieServer = new BufferedWriter(new OutputStreamWriter(mySocket.getOutputStream()));
             String[] buffer = entreServer.readLine().split(" ");
+            System.out.println("destination : " + buffer[0]);
             System.out.println("destination : " + buffer[1]);
-            HttpResponse<String> response = monProxy(buffer[1]);
+            System.out.println("destination : " + buffer[2]);
+            //HttpResponse<String> response = monProxy(buffer[1]);
             if(response != null) {
 
                 HttpHeaders responseHeader = response.headers();
@@ -412,12 +405,12 @@ public class __ProxyServS extends Thread {
                 String version = response.version().toString().replaceFirst("_", "/").replaceFirst("_", ".");
                 int etat = response.statusCode();
                 Optional<SSLSession> sslSession = response.sslSession();
-                String responseBody = response.body();
+                //String responseBody = response.body();
 
                 sortieServer.write(version + " " + etat + " OK ");
                 sortieServer.newLine();
                 sortieServer.newLine();
-                sortieServer.write(responseBody);
+                //sortieServer.write(responseBody);
                 sortieServer.close();
             }
 

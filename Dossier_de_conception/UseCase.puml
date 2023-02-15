@@ -1,0 +1,20 @@
+
+
+@startuml
+title UBERNET
+
+skinparam actorStyle Hollow
+top to bottom direction
+actor User
+skinparam packageStyle rectangle
+actor Admin
+
+    Admin -right-> (C.R.U.D.)
+    node Proxy {
+    (URL)
+    (C.R.U.D.) -u- [VirtualDNS]
+    }
+    User ---down-> (URL)
+    Proxy .r.> User
+
+@enduml
