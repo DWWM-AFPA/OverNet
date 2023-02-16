@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="be8767d2-2e32-485d-98ee-0f671db4b610" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/UbernetSequenceMain.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UberNetUseCase.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OvernetProxy.puml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/over.puml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/OverNet/Proxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/OverNet/Proxy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/OverNet/RequestHandler$ClientToServerHttpsTransmit.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/OverNet/RequestHandler$ClientToServerHttpsTransmit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/OverNet/RequestHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/OverNet/RequestHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Proxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Proxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/RequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/out/production/OverNet/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/out/production/OverNet/.idea/vcs.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="UML Class" />
+        <option value="UML Use Case" />
+        <option value="UML Sequence" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Kr2T6pWoAarjFhIqEk839AmHLm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultPlantUmlFileTemplate": "UML Sequence",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="be8767d2-2e32-485d-98ee-0f671db4b610" name="Changes" comment="" />
+      <created>1674718389164</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1674718389164</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
