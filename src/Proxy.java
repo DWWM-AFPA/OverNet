@@ -1,9 +1,4 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -39,16 +34,17 @@ public class Proxy implements Runnable {
 
     // Méthode principale du programme
     public static void main(String[] args) {
+
         // Créer une instance du proxy et commence à écouter les connexions
-        Proxy myProxy = new Proxy(8080);  // spécifier le port
+        Proxy myProxy = new Proxy(800);  // spécifier le port
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
         //Proxy myProxy
         //myProxy.listen();
-        System.out.println();
+
+       // System.out.println();
 
     }
-
-
 
 
     private ServerSocket serverSocket;

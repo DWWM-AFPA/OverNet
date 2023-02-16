@@ -240,8 +240,7 @@ public class RequestHandler implements Runnable {
                 BufferedImage image = ImageIO.read(remoteURL);
 
                 if (image != null) {
-                    // Mise en cache de l'image su
-                    // r le disque.
+                    // Mise en cache de l'image sur le disque.
 
                     ImageIO.write(image, fileExtension.substring(1), fileToCache);
 
@@ -429,8 +428,8 @@ public class RequestHandler implements Runnable {
         /**
          *
          * Créer un objet pour écouter le client et transmettre les données au serveur.
-         * @param proxyToClientInputStream que le proxy utilise pour recevoir les données du client.
-         * @param proxyToServerOutputStream que le proxy utilise pour transmettre les données au serveur distant
+         * @param proxyToClientIS que le proxy utilise pour recevoir les données du client.
+         * @param proxyToServerOS que le proxy utilise pour transmettre les données au serveur distant
          */
     public ClientToServerHttpsTransmit(InputStream proxyToClientIS, OutputStream proxyToServerOS) {
             this.proxyToClientIS = proxyToClientIS;

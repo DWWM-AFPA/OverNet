@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+autonumber
+
+skinparam backgroundColor  #B2BABB
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 10
+skinparam maxmessagesize 60
+skinparam actorColor #red
+
+actor Users #red
+
+participant "Proxy" as A
+participant "Network" as B
+Users -> A: request()
+activate A
+A -> B: request()
+activate B
+B -> A: response()
+deactivate B
+A -> Users: response()
+
+@enduml

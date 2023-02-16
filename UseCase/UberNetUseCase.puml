@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+
+skinparam actorStyle Hollow
+
+
+
+:Admin: as Admin #red
+:User: as User #blue
+
+
+package System{
+User -left-> (Proxy)
+(Proxy) -left--> (User)
+Proxy --> (Sites dérivés) : extends
+(Sites dérivés) --> User
+Proxy --> (Annuaire DNS)
+Admin -left--> (Annuaire DNS)
+
+
+@enduml
