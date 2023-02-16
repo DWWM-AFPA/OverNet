@@ -7,7 +7,7 @@ Admin -> VDNS: Demande d'afficher la liste des valeurs
 VDNS -> Server: Recupere toutes les valeurs presentes dans la table
 VDNS <-- Server: Retourne le contenu de la table
 
-VDNS --> Admin: Affiche le tablau des valeurs
+VDNS --> Admin: Affiche le tableau des valeurs
 group Creation
     Admin -> VDNS: Création d'une ligne
     VDNS -> Server: INSERT une ligne
