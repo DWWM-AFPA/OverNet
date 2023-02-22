@@ -1,0 +1,16 @@
+0###IP###Address###Destination
+1###**.***.**.**###www.yannick.com###www.google.com
+2###**.***.**.**###www.thomas.com###www.google.com
+3###--.---.--.--###www.sylvie.com###www.gobland.fr
+4###**.***.**.**###www.chacha.com###www.google.com
+5###**.***.**.**###www.florian.com###www.google.com
+6###**.***.**.**###www.yannick.com###www.google.com
+7###**.***.**.**###www.thomas.com###www.google.com
+9###**.***.**.**###www.chacha.com###www.google.com
+10###**.***.**.**###www.florian.com###www.google.com
+11###**.***.**.**###www.yannick.com###www.google.com
+12###**.***.**.**###www.thomas.com###www.google.com
+13###**.***.**.**###www.julien.com###www.google.com
+14###**.***.**.**###www.chacha.com###www.google.com
+15###**.***.**.**###www.florian.com###www.google.com
+16###**.***.**.**###www.florian.com###www.google.com

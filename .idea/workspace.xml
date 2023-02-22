@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1cb1b4e3-5125-473e-9076-17b5f41dc4fa" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OverNet/src/Connection__.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OverNet/src/testConnect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OverNet/clientProxy/src/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/clientProxy/src/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OverNet/out/production/OverNet/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/out/production/OverNet/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OverNet/out/production/OverNet/__ProxyServS.class" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/out/production/OverNet/__ProxyServS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OverNet/out/production/OverNet/swing/Admin_VDNS.class" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/out/production/OverNet/swing/Admin_VDNS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OverNet/out/production/OverNet/swing/EditionVDS.class" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/out/production/OverNet/swing/EditionVDS.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dossier_de_conception/diagSequence.puml" beforeDir="false" afterPath="$PROJECT_DIR$/Dossier_de_conception/diagSequence.puml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +18,10 @@
       <list>
         <option value="HTML File" />
         <option value="UML Use Case" />
-        <option value="Class" />
         <option value="UML Sequence" />
         <option value="UML Activity" />
+        <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -43,6 +43,7 @@
     &quot;DefaultPlantUmlFileTemplate&quot;: &quot;UML Activity&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;117&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/CDA-08/IdeaProjects/Overnet/Dossier_de_conception&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
@@ -58,6 +59,9 @@
       <recent name="C:\Users\CDA-08\IdeaProjects\Overnet\swing" />
       <recent name="C:\Users\CDA-08\IdeaProjects\Overnet" />
       <recent name="C:\Users\CDA-08\IdeaProjects\Overnet\OverNet" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="" />
     </key>
   </component>
   <component name="RunManager">
