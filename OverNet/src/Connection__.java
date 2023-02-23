@@ -1,5 +1,3 @@
-import com.sun.source.tree.WhileLoopTree;
-
 import java.io.*;
 
 public class Connection__ {
@@ -45,7 +43,7 @@ public class Connection__ {
                 String data[];
                 data=s.split("###");
                 id = Integer.valueOf(data[0]);
-            };
+            }
             PrintWriter pw = new PrintWriter(new FileOutputStream(maDB, true));
             pw.append(id +1 + "###" + ip + "###" + address + "###" + destination);
             pw.append("\n");
@@ -132,9 +130,7 @@ public class Connection__ {
                     sb.append(s);
                     sb.append("\n");
                 }
-
             }
-
             PrintWriter pw = new PrintWriter(new FileOutputStream(maDB, false));
             pw.print(sb);
             pw.close();

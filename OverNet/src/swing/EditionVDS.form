@@ -66,7 +66,9 @@
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <text value=""/>
+                </properties>
               </component>
               <component id="bafe2" class="javax.swing.JTextField" binding="destinationField">
                 <constraints>
@@ -84,7 +86,9 @@
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <text value=""/>
+                </properties>
               </component>
               <component id="e987b" class="javax.swing.JLabel">
                 <constraints>
