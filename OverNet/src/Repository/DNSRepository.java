@@ -1,37 +1,12 @@
 package Repository;
-
-import Entity.ConnectionEntity;
 import Entity.DNSEntity;
-import Entity.DNSRowEntity;
-//import Entity.HttpResponseSer;
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
-
 import static Entity.DNSEntity.addressDNS;
 import static Entity.DNSEntity.ipDNS;
 
 public class DNSRepository {
-    public static void run() {
-
-        new ConnectionEntity();
-
-        HashMap<InetAddress, URL> ipDNS = new HashMap<>();
-        HashMap<URL, String> addressDNS = new HashMap<>();
-
-        ArrayList <DNSRowEntity> r =  ConnectionRepository.readAll();
-
-        int size = r.size();
-        for (int i = 0; i < size; i++){
-            DNSRowEntity row = r.get(i);
-            ipDNS.put(row.getIp(), row.getUrl());
-            addressDNS.put(row.getUrl(), row.getDestination());
-        }
-
-        DNSEntity.setIpDNS(ipDNS);
-        DNSEntity.setAddressDNS(addressDNS);
-    }
 
     public static void update(int id, InetAddress ip, URL address, String destination){
         ipDNS.put(ip, address);
@@ -128,13 +103,10 @@ public class DNSRepository {
         return s;
     }
 
-
     public static Object resultDNS(Object request){
         URL url = testIP(ipDNS, request);
         String dest = url != null ? addressDNS.get(url):testURL(addressDNS, request);
         return dest;
     }
-
-    
 
 }

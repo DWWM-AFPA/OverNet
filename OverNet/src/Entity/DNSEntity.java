@@ -1,9 +1,8 @@
 package Entity;
-
+import Repository.ConnectionRepository;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.URL;
-import java.net.http.HttpResponse;
 import java.util.*;
 
 public class DNSEntity implements Serializable {
@@ -30,13 +29,23 @@ public class DNSEntity implements Serializable {
         return addressDNS;
     }
 
-    public static boolean f(String ip){
-        boolean retour=false;
-        for (InetAddress in: ipDNS.keySet()) {
-            if(Objects.equals(in.getHostAddress(), ip))
-                retour=true;
+    public DNSEntity(){
+        new ConnectionEntity();
+
+        HashMap<InetAddress, URL> ipDNS = new HashMap<>();
+        HashMap<URL, String> addressDNS = new HashMap<>();
+
+        ArrayList <DNSRowEntity> r =  ConnectionRepository.readAll();
+
+        int size = r.size();
+        for (int i = 0; i < size; i++){
+            DNSRowEntity row = r.get(i);
+            ipDNS.put(row.getIp(), row.getUrl());
+            addressDNS.put(row.getUrl(), row.getDestination());
         }
-        return retour;
+
+        DNSEntity.ipDNS = ipDNS;
+        DNSEntity.addressDNS = addressDNS;
     }
 
 }

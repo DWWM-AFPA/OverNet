@@ -318,7 +318,7 @@ public class __ProxyServer extends Thread {
      * @param localPort un entier
      */
     public void runProxy(int localPort) {
-        DNSRepository.run();
+        new DNSEntity();
         DNSRepository monDnsRepository = new DNSRepository();
         ServerSocket myServerSocket;
         Socket mySocket = null;

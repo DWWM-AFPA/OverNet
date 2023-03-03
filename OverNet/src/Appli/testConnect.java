@@ -1,5 +1,6 @@
 package Appli;
 
+import Entity.DNSEntity;
 import Entity.DNSRowEntity;
 import Repository.ConnectionRepository;
 import Repository.DNSRepository;
@@ -7,7 +8,7 @@ import Repository.DNSRepository;
 public class testConnect {
     public static void main(String[] args) throws Exception{
         new ConnectionRepository();
-        DNSRepository.run();
+        new DNSEntity();
 
         //Connection__.insert("8.8.8.8","www.simon.com", "www.gobland.fr");
         //Connection__.delete(18);
