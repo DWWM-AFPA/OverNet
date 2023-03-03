@@ -1,4 +1,7 @@
-import javax.net.ssl.HttpsURLConnection;
+package Entity;
+
+import Repository.DNSRepository;
+
 import javax.net.ssl.SSLSession;
 import java.io.*;
 import java.net.*;
@@ -8,19 +11,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Optional;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.cert.Certificate;
-
-import javax.net.ssl.SSLPeerUnverifiedException;
 
 /**
- * Classe __ProxyServer permetant l'ecoute d'un port afin de creer un proxy
+ * Classe Entity.__ProxyServer permetant l'ecoute d'un port afin de creer un proxy
  * @author Florian, Chacha, Julien, Thomas
  * @version 1.0
  */
 
-public class __ProxyServS extends Thread {
+public class __ProxyServer extends Thread {
 
 
     /**
@@ -42,6 +40,8 @@ public class __ProxyServS extends Thread {
      * Un Socket à visibilité privée
      */
     private Socket mySocket;
+
+    private DNSRepository monDNSRepository;
 
     /**
      * Seteur de l'attribut request avec en paramètre HttpRequest
@@ -107,6 +107,14 @@ public class __ProxyServS extends Thread {
         return mySocket;
     }
 
+    public void setMonDNS(DNSRepository monDNSRepository) {
+        this.monDNSRepository = monDNSRepository;
+    }
+
+    public DNSRepository getMonDNS() {
+        return monDNSRepository;
+    }
+
     /**
      * Un constructeur avec un string, une InetAdress, et un entier
      * en paramètre.
@@ -153,36 +161,39 @@ public class __ProxyServS extends Thread {
      * @param port un entier
      * @return HttpResponse
      */
-    public HttpResponse monProxy(String myRequest, String addr, int port){
+    public HttpResponse monProxy(Object myRequest, String addr, int port){
 
-        HttpRequest request = httpRequestFromString(myRequest);
         InetSocketAddress socket = new InetSocketAddress(addr, port);
         ProxySelector myProxyAdress = ProxySelector.of(socket);
+        Object o = DNSRepository.resultDNS(myRequest);
 
-        try{
-            HttpClient client = HttpClient.newBuilder()
-                    .connectTimeout(Duration.ofSeconds(20))
-                    .proxy(myProxyAdress)
-                    .build();
-            return client.send(request, HttpResponse.BodyHandlers.ofString());
-        }
-        catch (IOException e){
-            System.err.println("IOException :" + e);
-            e.printStackTrace();
+        if (o!=null){
+            System.out.println("tttttttt  "+o);
             return null;
-        }
-        catch (InterruptedException e){
-            System.err.println("InterruptedException :" + e);
-            return null;
-        }
-        catch (IllegalArgumentException e){
-            System.err.println("L'argument de mon socket est pas bon :" + e);
-            return null;
-        }
-        catch (Exception e){
-            System.err.println("CA MARCHE PAS : " + e);
-            e.printStackTrace();
-            return null;
+        }else {
+            HttpRequest request = httpRequestFromString((String)
+                    myRequest);
+            try {
+                HttpClient client = HttpClient.newBuilder()
+                        .connectTimeout(Duration.ofSeconds(20))
+                        .proxy(myProxyAdress)
+                        .build();
+                return client.send(request, HttpResponse.BodyHandlers.ofString());
+            } catch (IOException e) {
+                System.err.println("IOException :" + e);
+                e.printStackTrace();
+                return null;
+            } catch (InterruptedException e) {
+                System.err.println("InterruptedException :" + e);
+                return null;
+            } catch (IllegalArgumentException e) {
+                System.err.println("L'argument de mon socket est pas bon :" + e);
+                return null;
+            } catch (Exception e) {
+                System.err.println("CA MARCHE PAS : " + e);
+                e.printStackTrace();
+                return null;
+            }
         }
     }
 
@@ -192,25 +203,36 @@ public class __ProxyServS extends Thread {
      * @param myRequest un string
      * @return HttpResponse
      */
-    public HttpsURLConnection monProxy(String myRequest){
-        HttpsURLConnection retour = null;
-        try {
-            URL url = new URL(myRequest);
-            HttpsURLConnection client = (HttpsURLConnection)url.openConnection();
-            retour = client;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public HttpResponse monProxy(Object myRequest){
+
+        Object o = DNSRepository.resultDNS(myRequest);
+
+        if (o!=null){
+            System.out.println("tttttttt  "+o);
+            return null;
+        }else {
+            HttpRequest request = httpRequestFromString((String) myRequest);
+            try {
+                HttpClient client = HttpClient.newBuilder()
+                        .connectTimeout(Duration.ofSeconds(20))
+                        .build();
+
+                return client.send(request, HttpResponse.BodyHandlers.ofString());
+            } catch (IOException e) {
+                System.err.println("IOException 139 :" + e);
+                return null;
+            } catch (InterruptedException e) {
+                System.err.println("InterruptedException :" + e);
+                return null;
+            } catch (IllegalArgumentException e) {
+                System.err.println("L'argument de mon socket est pas bon :" + e);
+                return null;
+            } catch (Exception e) {
+                System.err.println("CA MARCHE PAS : " + e);
+                System.err.flush();
+                return null;
+            }
         }
-        catch (Exception e){
-            System.err.println("CA MARCHE PAS : " + e);
-            //e.printStackTrace();
-            System.err.flush();
-            //System.out.println("request " + request);
-            //System.out.println("pasrequest " + HttpResponse.BodyHandlers.ofString());
-        }
-        return retour;
     }
 
     /**
@@ -230,12 +252,10 @@ public class __ProxyServS extends Thread {
      * de la requête HttpRequest
      * @param myRequest un string
      */
-    public void testhtml (String myRequest){
-            System.out.println(monProxy(myRequest)
-                    //.getURL()
-                    //.get
-                    //.body()
-            );
+    public void testhtml(String myRequest){
+        System.out.println(monProxy(myRequest)
+                .body()
+        );
     }
 
     /**
@@ -274,8 +294,7 @@ public class __ProxyServS extends Thread {
      * @param port un entier
      */
     public void test(String myRequest, String addr, int port){
-        System.out.println(monProxy(myRequest, addr, port)
-        );
+            System.out.println("aaaaa  " + monProxy(myRequest, addr, port));
     }
 
     /**
@@ -299,8 +318,9 @@ public class __ProxyServS extends Thread {
      * @param localPort un entier
      */
     public void runProxy(int localPort) {
-
-        ServerSocket myServerSocket = null;
+        DNSRepository.run();
+        DNSRepository monDnsRepository = new DNSRepository();
+        ServerSocket myServerSocket;
         Socket mySocket = null;
 
 
@@ -314,6 +334,8 @@ public class __ProxyServS extends Thread {
                 System.out.println("Socket Créé");
                 __ProxyServer monThread = new __ProxyServer();
                 monThread.setMySocket(mySocket);
+                monThread.setMonDNS(monDnsRepository);
+
                 new Thread(monThread).start();
             }
         } catch (IOException e) {
@@ -394,10 +416,8 @@ public class __ProxyServS extends Thread {
             entreServer = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
             sortieServer = new BufferedWriter(new OutputStreamWriter(mySocket.getOutputStream()));
             String[] buffer = entreServer.readLine().split(" ");
-            System.out.println("destination : " + buffer[0]);
             System.out.println("destination : " + buffer[1]);
-            System.out.println("destination : " + buffer[2]);
-            //HttpResponse<String> response = monProxy(buffer[1]);
+            HttpResponse<String> response = monProxy(buffer[1]);
             if(response != null) {
 
                 HttpHeaders responseHeader = response.headers();
@@ -405,12 +425,12 @@ public class __ProxyServS extends Thread {
                 String version = response.version().toString().replaceFirst("_", "/").replaceFirst("_", ".");
                 int etat = response.statusCode();
                 Optional<SSLSession> sslSession = response.sslSession();
-                //String responseBody = response.body();
+                String responseBody = response.body();
 
                 sortieServer.write(version + " " + etat + " OK ");
                 sortieServer.newLine();
                 sortieServer.newLine();
-                //sortieServer.write(responseBody);
+                sortieServer.write(responseBody);
                 sortieServer.close();
             }
 

@@ -1,38 +1,15 @@
+package Repository;
+
+import Entity.DNSRowEntity;
 import java.io.*;
+import java.net.InetAddress;
+import java.net.URL;
+import java.util.ArrayList;
 
-public class Connection__ {
-    protected static File maDB;
+import static Entity.ConnectionEntity.*;
+import static Repository.DNSRepository.fromString;
 
-    protected static boolean exist;
-
-    public static void setMaDB(File maDB) {
-        Connection__.maDB = maDB;
-    }
-
-    public static void setExist(boolean exist) {
-        Connection__.exist = exist;
-    }
-
-    protected static void create(){
-        maDB = new File("Overnet/maDB/Database.txt");
-        setMaDB(maDB.getAbsoluteFile());
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(maDB));
-        if (br.readLine() == null) {
-            try{
-                PrintWriter pw = new PrintWriter(new FileOutputStream(maDB.getAbsolutePath(), false));
-                pw.print("0###IP###Address###Destination\n");
-                pw.close();
-            }catch (Exception ex){
-                System.err.println("Probleme de creation de l'entête de la table : " + ex);
-            }
-            //System.out.println(maDB.exists());
-            setExist(maDB.exists());
-        }
-        }catch(Exception ex){
-
-        }
-    }
+public class ConnectionRepository {
 
     public static void insert(String ip, String address, String destination){
         long id = 0;
@@ -54,7 +31,47 @@ public class Connection__ {
         }
     }
 
-    public static void readAll(){
+    public static ArrayList <DNSRowEntity> readAll(){
+        ArrayList <DNSRowEntity> retour = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(maDB));
+            String s = "";
+            while ( (s=br.readLine()) != null){
+
+                String data[] ;
+                data= s.split("###");
+                DNSRowEntity dnsRowEntity = new DNSRowEntity(Integer.valueOf(data[0]), (InetAddress) fromString(data[1]),(URL) fromString(data[2]), (String) fromString(data[3]));
+                retour.add(dnsRowEntity);
+            }
+        }catch (Exception ex){
+            System.err.println("Exception lors du readAll : " + ex);
+        }
+        return retour;
+    }
+
+    public static DNSRowEntity readOne(int id){
+        DNSRowEntity retour = null;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(maDB));
+            String s = "";
+            while ( (s=br.readLine()) != null){
+                String data[] ;
+                data= s.split("###");
+
+                if (Integer.valueOf(data[0]).equals(id)) {
+                    for (int i = 0; i < data.length; i++) {
+                        retour =  new DNSRowEntity(Integer.valueOf(data[0]),(InetAddress) fromString(data[1]),(URL) fromString(data[2]), (String) fromString(data[3]));
+                    }
+                }
+
+            }
+        }catch (Exception ex){
+            System.err.println("Exception lors du readAll : " + ex);
+        }
+        return retour;
+    }
+
+    public static void printAll(){
         try {
             BufferedReader br = new BufferedReader(new FileReader(maDB));
             String s = "";
@@ -67,11 +84,11 @@ public class Connection__ {
                 System.out.println();
             }
         }catch (Exception ex){
-            System.err.println("Exception lors du readAll : " + ex);
+            System.err.println("Exception lors du printAll : " + ex);
         }
     }
 
-    public static void readOne(int id){
+    public static void printOne(int id){
         try {
             BufferedReader br = new BufferedReader(new FileReader(maDB));
             String s = "";
@@ -86,7 +103,7 @@ public class Connection__ {
                 }
             }
         }catch (Exception ex){
-            System.err.println("Exception lors du readOne : " + ex);
+            System.err.println("Exception lors du printOne : " + ex);
         }
     }
 
@@ -154,7 +171,5 @@ public class Connection__ {
             System.err.println("Exception lors du deleteAll : " + ex);
         }
     }
-
-
 
 }
