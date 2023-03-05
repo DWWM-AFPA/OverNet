@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 public class Admin_VDNS extends JDialog {
     private JPanel contentPane;
     private JButton Edition;
-    private JTable table1;
+    //private JTable table1;
 
     public Admin_VDNS() {
         setContentPane(contentPane);

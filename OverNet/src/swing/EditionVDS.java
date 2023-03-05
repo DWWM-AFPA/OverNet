@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 public class EditionVDS extends JDialog {
     private JPanel contentPane;
     private JButton valider;
-    private JButton supprimer;
-    private JTextField ipField;
-    private JTextField adresseField;
-    private JTextField destinationField;
+    //private JButton supprimer;
+    //private JTextField ipField;
+    //private JTextField adresseField;
+    //private JTextField destinationField;
 
     Object[][] donnees = {
             {"Swing", "Astral", "standard"},

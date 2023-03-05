@@ -1,11 +1,11 @@
 package Entity;
 
-import javax.net.ssl.SSLSession;
-import java.io.Serializable;
-import java.net.*;
-import java.net.http.*;
-import java.util.Optional;
-
+//import javax.net.ssl.SSLSession;
+//import java.io.Serializable;
+//import java.net.*;
+//import java.net.http.*;
+//import java.util.Optional;
+//
 //public class HttpResponseSeri extends HttpResponse implements Serializable {
 //    @Override
 //    public int statusCode() {

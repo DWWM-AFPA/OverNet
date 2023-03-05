@@ -10,7 +10,7 @@ public class SerObj {
 
     }
 
-    public static String serHttpResponse(HttpResponse httpresponse){
+    public static String serHttpResponse(HttpResponse<String> httpresponse){
         String retour ="";
 
         try {
@@ -28,8 +28,8 @@ public class SerObj {
 
         return retour;
     }
-
-    public static HttpResponse serString(String string){
+/*
+    public static HttpResponse<String> serString(String string){
         HttpResponse retour=null;
 
         try {
@@ -37,7 +37,7 @@ public class SerObj {
 
             ctx.bind("dest", string);
 
-            retour = (HttpResponse)ctx.lookup("dest");
+            retour = (HttpResponse<String>)ctx.lookup("dest");
 
 
         }
@@ -47,4 +47,5 @@ public class SerObj {
 
         return retour;
     }
+    */
 }

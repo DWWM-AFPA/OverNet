@@ -2,15 +2,12 @@ package Entity;
 
 import Repository.DNSRepository;
 
-import javax.net.ssl.SSLSession;
 import java.io.*;
 import java.net.*;
 import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.Optional;
 
 /**
  * Classe Entity.__ProxyServer permetant l'ecoute d'un port afin de creer un proxy
@@ -29,7 +26,7 @@ public class __ProxyServer extends Thread {
     /**
      * Un HttpResponse à visibilité privée
      */
-    private HttpResponse response;
+    private HttpResponse<String> response;
 
     /**
      * Un InetSocketAddress à visibilité privée
@@ -63,7 +60,7 @@ public class __ProxyServer extends Thread {
      * Seteur de l'attribut response avec en paramètre HttpResponse
      * @param response une HttpResponse
      */
-    public void setResponse(HttpResponse response) {
+    public void setResponse(HttpResponse<String> response) {
         this.response = response;
     }
 
@@ -71,7 +68,7 @@ public class __ProxyServer extends Thread {
      * Geteur de l'attribut response
      * @return HttpResponse
      */
-    public HttpResponse getResponse() {
+    public HttpResponse<String> getResponse() {
         return response;
     }
 
@@ -123,7 +120,7 @@ public class __ProxyServer extends Thread {
      * @param port un entier
      * @return HttpResponse
      */
-    public HttpResponse monProxy(String myRequest, InetAddress addr, int port){
+    public HttpResponse<String> monProxy(String myRequest, InetAddress addr, int port){
 
         HttpRequest request = httpRequestFromString(myRequest);
         InetSocketAddress socket = new InetSocketAddress(addr, port);
@@ -161,7 +158,7 @@ public class __ProxyServer extends Thread {
      * @param port un entier
      * @return HttpResponse
      */
-    public HttpResponse monProxy(Object myRequest, String addr, int port){
+    public HttpResponse<String> monProxy(Object myRequest, String addr, int port){
 
         InetSocketAddress socket = new InetSocketAddress(addr, port);
         ProxySelector myProxyAdress = ProxySelector.of(socket);
@@ -203,7 +200,7 @@ public class __ProxyServer extends Thread {
      * @param myRequest un string
      * @return HttpResponse
      */
-    public HttpResponse monProxy(Object myRequest){
+    public HttpResponse<String> monProxy(Object myRequest){
 
         Object o = DNSRepository.resultDNS(myRequest);
 
