@@ -3,7 +3,6 @@ package Appli;
 import Entity.DNSEntity;
 import Entity.DNSRowEntity;
 import Repository.ConnectionRepository;
-import Repository.DNSRepository;
 
 public class testConnect {
     public static void main(String[] args) throws Exception{
@@ -27,6 +26,7 @@ public class testConnect {
         for (DNSRowEntity entry : ConnectionRepository.readAll()) {
 
             System.out.println("Mon Id : "+entry.getId()+"\nMon Ip : " + entry.getIp().getHostAddress() + "\nMon Adresse : " + entry.getUrl() + "\nMa destination : " + entry.getDestination());
+            System.out.println("-------------------------------------------");
 
         }
         //System.out.println("Mon Id : "+ConnectionRepository.readOne(2).getId()+"\nMon Ip : " + ConnectionRepository.readOne(2).getIp().getHostAddress() + "\nMon Adresse : " + ConnectionRepository.readOne(2).getUrl() + "\nMa destination : " + ConnectionRepository.readOne(2).getDestination());

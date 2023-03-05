@@ -21,6 +21,7 @@ public class ConnectionRepository {
                 data=s.split("###");
                 id = Integer.valueOf(data[0]);
             }
+            br.close();
             PrintWriter pw = new PrintWriter(new FileOutputStream(maDB, true));
             pw.append(id +1 + "###" + ip + "###" + address + "###" + destination);
             pw.append("\n");
@@ -43,6 +44,7 @@ public class ConnectionRepository {
                 DNSRowEntity dnsRowEntity = new DNSRowEntity(Integer.valueOf(data[0]), (InetAddress) fromString(data[1]),(URL) fromString(data[2]), (String) fromString(data[3]));
                 retour.add(dnsRowEntity);
             }
+            br.close();
         }catch (Exception ex){
             System.err.println("Exception lors du readAll : " + ex);
         }
@@ -65,6 +67,7 @@ public class ConnectionRepository {
                 }
 
             }
+            br.close();
         }catch (Exception ex){
             System.err.println("Exception lors du readAll : " + ex);
         }
@@ -83,6 +86,7 @@ public class ConnectionRepository {
                 }
                 System.out.println();
             }
+            br.close();
         }catch (Exception ex){
             System.err.println("Exception lors du printAll : " + ex);
         }
@@ -102,6 +106,7 @@ public class ConnectionRepository {
                     System.out.println();
                 }
             }
+            br.close();
         }catch (Exception ex){
             System.err.println("Exception lors du printOne : " + ex);
         }
@@ -124,6 +129,7 @@ public class ConnectionRepository {
                     sb.append("\n");
                 }
             }
+            br.close();
             PrintWriter pw = new PrintWriter(new FileOutputStream(maDB, false));
             pw.print(sb);
             pw.close();
@@ -148,6 +154,7 @@ public class ConnectionRepository {
                     sb.append("\n");
                 }
             }
+            br.close();
             PrintWriter pw = new PrintWriter(new FileOutputStream(maDB, false));
             pw.print(sb);
             pw.close();
@@ -164,6 +171,7 @@ public class ConnectionRepository {
                     String row = "";
                     sb.append(row);
             }
+            br.close();
             PrintWriter pw = new PrintWriter(new FileOutputStream(maDB, false));
             pw.print(sb);
             pw.close();

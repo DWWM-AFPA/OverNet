@@ -1,7 +1,5 @@
 package Entity;
 
-import Entity.__ProxyServer;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 import java.io.*;
@@ -401,11 +399,8 @@ public class __ProxyServS extends Thread {
             //HttpResponse<String> response = monProxy(buffer[1]);
             if(response != null) {
 
-                HttpHeaders responseHeader = response.headers();
-
                 String version = response.version().toString().replaceFirst("_", "/").replaceFirst("_", ".");
                 int etat = response.statusCode();
-                Optional<SSLSession> sslSession = response.sslSession();
                 //String responseBody = response.body();
 
                 sortieServer.write(version + " " + etat + " OK ");

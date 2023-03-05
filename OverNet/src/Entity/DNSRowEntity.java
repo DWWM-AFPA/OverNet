@@ -1,9 +1,7 @@
 package Entity;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.net.URL;
-import java.net.http.HttpResponse;
 
 public class DNSRowEntity {
 
