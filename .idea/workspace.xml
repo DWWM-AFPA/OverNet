@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1cb1b4e3-5125-473e-9076-17b5f41dc4fa" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/OverNet/src/Entity/DNSEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/src/Entity/DNSEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OverNet/src/Entity/__ProxyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/src/Entity/__ProxyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OverNet/src/Repository/DNSRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/OverNet/src/Repository/DNSRepository.java" afterDir="false" />
-    </list>
+    <list default="true" id="1cb1b4e3-5125-473e-9076-17b5f41dc4fa" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
