@@ -11,36 +11,32 @@ public class DNSRowEntity {
 
         private String destination;
 
-        public DNSRowEntity setId(int id) {
+        public void setId(int id) {
             this.id = id;
-            return this;
         }
 
         public int getId() {
             return id;
         }
 
-        public DNSRowEntity setIp(InetAddress ip) {
+        public void setIp(InetAddress ip) {
             this.ip = ip;
-            return this;
         }
 
         public InetAddress getIp() {
             return ip;
         }
 
-        public DNSRowEntity setUrl(URL url) {
+        public void setUrl(URL url) {
             this.url = url;
-            return this;
         }
 
         public URL getUrl() {
             return url;
         }
 
-        public DNSRowEntity setDestination(String destination) {
+        public void setDestination(String destination) {
             this.destination = destination;
-            return this;
         }
 
         public String getDestination() {

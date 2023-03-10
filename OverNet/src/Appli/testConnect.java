@@ -3,10 +3,14 @@ package Appli;
 import Entity.DNSEntity;
 import Entity.DNSRowEntity;
 import Repository.ConnectionRepository;
+import Repository.DNSRepository;
+
+import java.net.InetAddress;
+import java.net.URL;
 
 public class testConnect {
     public static void main(String[] args) throws Exception{
-        new ConnectionRepository();
+
         new DNSEntity();
 
         //Connection__.insert("8.8.8.8","www.simon.com", "www.gobland.fr");
@@ -15,7 +19,7 @@ public class testConnect {
         //System.out.println(DNSEntity.getIpDNS());
         //System.out.println(DNSEntity.getAddressDNS());
 //        try {
-//            DNSRepository.insert(InetAddress.getByName("8.8.8.8"), new URL("http://www.simon.com"), "www.gobland.fr");
+//            DNSRepository.insert(InetAddress.getByName("10.10.10.10"), new URL("http://www.chacha.com"), "www.tinder.fr");
 //        }catch (Exception ex){
 //            ex.printStackTrace();
 //        }
@@ -23,6 +27,23 @@ public class testConnect {
 //        InetAddress testIp = InetAddress.getByName("www.google.fr");
 //        System.out.println(testIp.getHostName());
 //        System.out.println(ConnectionRepository.readAll());
+        for (DNSRowEntity entry : ConnectionRepository.readAll()) {
+
+            System.out.println("Mon Id : "+entry.getId()+"\nMon Ip : " + entry.getIp().getHostAddress() + "\nMon Adresse : " + entry.getUrl() + "\nMa destination : " + entry.getDestination());
+            System.out.println("-------------------------------------------");
+
+        }
+
+        DNSRowEntity entry3 = ConnectionRepository.readOne(6);
+
+        assert entry3 != null;
+        System.out.println("Mon Id : "+entry3.getId()+"\nMon Ip : " + entry3.getIp().getHostAddress() + "\nMon Adresse : " + entry3.getUrl() + "\nMa destination : " + entry3.getDestination());
+
+        DNSRepository.update(6, InetAddress.getByName("10.10.10.10"), new URL("http://www.chacha.com"), "www.tinder.fr");
+        DNSRowEntity entry2 = ConnectionRepository.readOne(6);
+
+        assert entry2 != null;
+        System.out.println("Mon Id : "+entry2.getId()+"\nMon Ip : " + entry2.getIp().getHostAddress() + "\nMon Adresse : " + entry2.getUrl() + "\nMa destination : " + entry2.getDestination());
         for (DNSRowEntity entry : ConnectionRepository.readAll()) {
 
             System.out.println("Mon Id : "+entry.getId()+"\nMon Ip : " + entry.getIp().getHostAddress() + "\nMon Adresse : " + entry.getUrl() + "\nMa destination : " + entry.getDestination());

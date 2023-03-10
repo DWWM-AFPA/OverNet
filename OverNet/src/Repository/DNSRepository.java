@@ -46,6 +46,10 @@ public class DNSRepository {
             System.err.println("SecurityException : "+ex);
             return null;
         }
+        catch(Exception ex){
+            System.err.println("Exception : "+ex);
+            return null;
+        }
     }
 
     public static Object fromString(Object s){
@@ -73,19 +77,24 @@ public class DNSRepository {
             System.err.println("ClassNotFoundException : "+ex);
             return null;
         }
+        catch(Exception ex){
+            System.err.println("Exception : "+ex);
+            return null;
+        }
     }
 
     public static URL testIP(HashMap<InetAddress, URL> map, Object monTest) {
-        URL url;
-        if ((url = map.get(monTest)) == null){
+        if (monTest instanceof String)
             for (InetAddress inet: map.keySet()) {
                 if(Objects.equals(inet.getHostAddress(), monTest)) {
-                    url = map.get(inet);
-                    break;
+                    return map.get(inet);
                 }
             }
-        }
-        return url;
+
+        else if (monTest instanceof InetAddress)
+            return map.get(((InetAddress) monTest));
+
+        return null;
     }
 
     public static String testURL(HashMap<URL, String> map, Object monTest){
@@ -105,8 +114,7 @@ public class DNSRepository {
 
     public static Object resultDNS(Object request){
         URL url = testIP(ipDNS, request);
-        String dest = url != null ? addressDNS.get(url):testURL(addressDNS, request);
-        return dest;
+        return url != null ? addressDNS.get(url):testURL(addressDNS, request);
     }
 
 }

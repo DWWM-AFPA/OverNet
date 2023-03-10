@@ -168,8 +168,7 @@ public class __ProxyServer extends Thread {
             System.out.println("tttttttt  "+o);
             return null;
         }else {
-            HttpRequest request = httpRequestFromString((String)
-                    myRequest);
+            HttpRequest request = httpRequestFromString((String) myRequest);
             try {
                 HttpClient client = HttpClient.newBuilder()
                         .connectTimeout(Duration.ofSeconds(20))
@@ -316,7 +315,6 @@ public class __ProxyServer extends Thread {
      */
     public void runProxy(int localPort) {
         new DNSEntity();
-        DNSRepository monDnsRepository = new DNSRepository();
         ServerSocket myServerSocket;
         Socket mySocket = null;
 
@@ -331,8 +329,6 @@ public class __ProxyServer extends Thread {
                 System.out.println("Socket Créé");
                 __ProxyServer monThread = new __ProxyServer();
                 monThread.setMySocket(mySocket);
-                monThread.setMonDNS(monDnsRepository);
-
                 new Thread(monThread).start();
             }
         } catch (IOException e) {
@@ -364,7 +360,7 @@ public class __ProxyServer extends Thread {
      */
     public void runProxy(int localPort, int backlog, String host) {
 
-        ServerSocket myServerSocket = null;
+        ServerSocket myServerSocket;
         Socket mySocket = null;
 
 
